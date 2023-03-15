@@ -12,9 +12,38 @@ const router = createRouter({
     {
       path: "/register",
       name: "register",
-      component: () => import("@/views/Auth/RegisterView.vue"),
+      beforeEnter: guest,
+      component: () => import("@/views/auth/RegisterView.vue"),
+    },
+    {
+      path: "/recettes",
+      name: "recettes.index",
+      beforeEnter: auth,
+      component: () => import("@/views/recettes/indexView.vue"),
+    },
+    {
+      path: "/login",
+      name: "login",
+      beforeEnter: guest,
+      component: () => import("@/views/auth/LoginView.vue"),
     },
   ],
 });
+
+function auth(to, from, next) {
+  if (!localStorage.getItem("access_token")) {
+    return next({ name: "login" });
+  }
+
+  next();
+}
+
+function guest(to, from, next) {
+  if (localStorage.getItem("access_token")) {
+    return next({ name: "recettes.index" });
+  }
+
+  next();
+}
 
 export default router;

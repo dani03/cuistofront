@@ -1,25 +1,25 @@
 import { reactive, ref } from "vue";
 import { defineStore } from "pinia";
-import { useAuth } from "./auth";
+import { useAuth } from "@/stores/auth";
 
-const auth = useAuth();
-export const useRegister = defineStore("register", () => {
-  const form = reactive({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-  });
+
+export const useLogin = defineStore("login", () => {
+  //pour la generation de token
+  const auth = useAuth();
   const errors = reactive({});
   const loading = ref(false);
 
+  const form = reactive({
+    email: "",
+    password: "",
+    remenber: false,
+  });
+
   function resetForm() {
-    form.firstname = "";
-    form.lastname = "";
     form.email = "";
     form.password = "";
-    form.password_confirmation = "";
+    form.remenber = "";
+
     errors.value = {};
   }
 
@@ -27,25 +27,22 @@ export const useRegister = defineStore("register", () => {
     if (loading.value) return;
 
     loading.value = true;
-    errors.value = {}; // on efface les erreurs
+    errors.value = {};
+
     return window.axios
-      .post("/register", form)
+      .post("login", form)
       .then((response) => {
-        //console.log(response.data);
-        auth.login(response.data.access_tokent);
+        auth.login(response.data.access_token);
       })
       .catch((error) => {
         if (error.response.status === 422) {
           errors.value = error.response.data.errors;
         }
       })
-
       .finally(() => {
         form.password = "";
-        form.password_confirmation = "";
         loading.value = false;
       });
   }
-
-  return { form, errors, resetForm, loading, handleSubmit };
+  return { form, errors, loading, resetForm, handleSubmit };
 });
