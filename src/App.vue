@@ -28,10 +28,17 @@ const auth = useAuth();
               Recettes
             </RouterLink>
           </template>
+          <template v-if="auth.check">
+            <RouterLink class="router-link" :to="{ name: 'profile' }">
+              Profil
+            </RouterLink>
+          </template>
         </div>
         <div class="flex gap-4 items-center">
           <template v-if="auth.check">
-            <button @click="auth.logout" class="router-link">Logout</button>
+            <button @click="auth.logout" class="router-link">
+              Déconnexion
+            </button>
           </template>
           <template v-else>
             <div>

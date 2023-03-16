@@ -27,6 +27,12 @@ const router = createRouter({
       beforeEnter: guest,
       component: () => import("@/views/auth/LoginView.vue"),
     },
+    {
+      path: "/profile",
+      name: "profile",
+      beforeEnter: auth,
+      component: () => import("@/views/profile/EditView.vue"),
+    },
   ],
 });
 
