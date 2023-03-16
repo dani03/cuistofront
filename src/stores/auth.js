@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 
 export const useAuth = defineStore("auth", () => {
   const router = useRouter();
-  const accessToken = useStorage("accessToken", "");
+  const accessToken = useStorage("access_token", "");
   const check = computed(() => !!accessToken.value);
 
   //on set le token
@@ -19,7 +19,7 @@ export const useAuth = defineStore("auth", () => {
   function login(accessToken) {
     setAccessToken(accessToken);
     //lorsqu'on est connecter on passe ensuite la route
-    router.push({ name: "vehicles.index" });
+    router.push({ name: "recettes.index" });
   }
 
   function destroyTokenAndRedirectTo(routeName = "login") {
@@ -29,7 +29,7 @@ export const useAuth = defineStore("auth", () => {
 
   async function logout() {
     return window.axios.post("/logout").finally(() => {
-      destroyTokenAndRedirectTo("register");
+      destroyTokenAndRedirectTo();
     });
   }
 

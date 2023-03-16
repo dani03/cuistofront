@@ -1,1 +1,1 @@
-<template>bienvenue!</template>
+<template>bienvenue! sur les recettes</template>

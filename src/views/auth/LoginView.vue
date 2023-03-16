@@ -27,7 +27,7 @@ onBeforeUnmount(store.resetForm);
       </div>
 
       <div class="flex flex-col gap-2 mb-4">
-        <label for="password" class="required">Password</label>
+        <label for="password" class="required">Mot de passe </label>
         <input
           v-model="store.form.password"
           id="password"

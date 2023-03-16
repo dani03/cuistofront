@@ -12,20 +12,20 @@ const auth = useAuth();
         <div class="flex gap-4 items-center">
           <h2 class="text-xl font-bold">
             <div
-              class="inline-flex items-center justify-center w-6 h-6 text-center"
+              class="router-link inline-flex items-center justify-center w-6 h-6 text-center"
             >
               <img src="@/assets/cuistotuto-logo.svg" />
             </div>
-            Cuistotutos
+            <a href="/">Cuistotutos</a>
           </h2>
-          <template v-if="auth.check">
-            <RouterLink class="router-link" :to="{ name: 'recettes.index' }">
-              Vehicles
-            </RouterLink>
-          </template>
-          <template v-else>
+          <!-- <template>
             <RouterLink class="router-link" :to="{ name: 'home' }">
               Acceuil
+            </RouterLink>
+          </template> -->
+          <template v-if="auth.check">
+            <RouterLink class="router-link" :to="{ name: 'recettes.index' }">
+              Recettes
             </RouterLink>
           </template>
         </div>

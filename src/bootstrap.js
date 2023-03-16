@@ -14,8 +14,10 @@ window.axios.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       const auth = useAuth();
+      console.log("pas connectez va être rediriger");
       auth.destroyTokenAndRedirectTo();
     }
+    console.log("user est bien connectez");
 
     return Promise.reject(error);
   }
