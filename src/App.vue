@@ -18,11 +18,6 @@ const auth = useAuth();
             </div>
             <a href="/">Cuistotutos</a>
           </h2>
-          <!-- <template>
-            <RouterLink class="router-link" :to="{ name: 'home' }">
-              Acceuil
-            </RouterLink>
-          </template> -->
           <template v-if="auth.check">
             <RouterLink class="router-link" :to="{ name: 'recettes.index' }">
               Recettes
@@ -31,6 +26,9 @@ const auth = useAuth();
           <template v-if="auth.check">
             <RouterLink class="router-link" :to="{ name: 'profile' }">
               Profil
+            </RouterLink>
+            <RouterLink class="router-link" :to="{ name: 'recettes.profile' }">
+              Mes recettes
             </RouterLink>
           </template>
         </div>

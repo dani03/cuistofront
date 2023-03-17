@@ -33,6 +33,18 @@ const router = createRouter({
       beforeEnter: auth,
       component: () => import("@/views/profile/EditView.vue"),
     },
+    {
+      path: "/update/profile/password",
+      name: "update.profile.password",
+      beforeEnter: auth,
+      component: () => import("@/views/profile/ChangePassword.vue"),
+    },
+    {
+      path: "/profile/recettes",
+      name: "recettes.profile",
+      beforeEnter: auth,
+      component: () => import("@/views/recettes/CreateView.vue"),
+    },
   ],
 });
 
