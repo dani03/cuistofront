@@ -52,6 +52,69 @@ onBeforeUnmount(store.resetForm);
         />
         <ValidationError :errors="store.errors" field="description" />
       </div>
+      <div>
+        <div class="flex flex-col gap-2 mt-4">
+          <label for="ingredients" class="required">Ingredients</label>
+          <input
+            v-model="store.form.ingredientName"
+            id="ingredients"
+            name="ingredientName"
+            type="text"
+            class="form-input w-48 plate"
+            :disabled="store.loading"
+          />
+          <ValidationError :errors="store.errors" field="ingredients[]" />
+        </div>
+        <!--  -->
+        <div class="inline-flex">
+          <div class="flex flex-col gap-2 ml-2">
+            <label for="qte" class="required">qté</label>
+            <input
+              v-model="store.form.quantite"
+              type="number"
+              name="quantite"
+              class="form-input w-16 plate"
+              required
+            />
+          </div>
+          <div class="flex flex-col gap-2 ml-2">
+            <label for="unite_mesure" class="required">unité de mesure</label>
+            <select
+              required
+              v-model="store.form.unite_mesure"
+              class="form-input w-32 plate"
+              name="ingredients[]"
+              id="unite_mesure"
+            >
+              <option value="Parts">Parts</option>
+              <option value="L">L (Litre)</option>
+              <option value="KG">KG (Kilogramme)</option>
+              <option value="G">G (Gramme)</option>
+            </select>
+            <button
+              type="button"
+              v-show="
+                store.form.unite_mesure &&
+                store.form.ingredientName &&
+                store.form.quantite
+              "
+              @click="store.clickToAdd"
+            >
+              valider
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <span
+          v-for="ingredient in store.form.ingredients"
+          :key="ingredient.name"
+          class="bg-blue-100 w-40 text-white-800 text-md font-medium m-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+        >
+          {{ ingredient.name }} ( {{ ingredient.quantite
+          }}{{ ingredient.unite_mesure }})
+        </span>
+      </div>
 
       <div class="border-t h-[1px] my-6"></div>
 
@@ -61,7 +124,7 @@ onBeforeUnmount(store.resetForm);
           class="btn btn-primary w-full"
           :disabled="store.loading"
         >
-          <IconSpinner class="animate-spin" v-show="store.loading" />
+          <!-- <IconSpinner class="animate-spin" v-show="store.loading" /> -->
           ajouter la recette
         </button>
         <!-- <RouterLink :to="{ name: 'vehicles.index' }" class="btn btn-secondary">

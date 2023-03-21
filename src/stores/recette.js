@@ -13,13 +13,36 @@ export const useRecette = defineStore("recette", () => {
     description: "",
     url_video: "",
     ingredients: ref([]),
+    ingredientName: ref(""),
+    quantite: ref(""),
+    unite_mesure: ref(""),
   });
 
+  function addIngredient() {
+    form.ingredients.push({
+      name: form.ingredientName,
+      quantite: form.quantite,
+      unite_mesure: form.unite_mesure,
+    });
+    form.ingredientName = "";
+    form.quantite = "";
+    form.unite_mesure = "";
+  }
+
+  function clickToAdd(event) {
+    event.preventDefault();
+    console.log("inside click to add ");
+    addIngredient();
+    console.log(form.ingredients);
+  }
   function resetForm() {
     form.name = "";
     form.description = "";
     form.url_video = "";
     form.ingredients = ref([]);
+    form.ingredientName = "";
+    form.quantite = "";
+    form.unite_mesure = "";
   }
 
   async function storeRecette() {
@@ -27,7 +50,9 @@ export const useRecette = defineStore("recette", () => {
 
     loading.value = true;
     errors.value = {};
-
+    //let ingredients = form.ingredients;
+    // addIngredient();
+    console.log(form.ingredients);
     window.axios
       .post("/recette", form)
       .then(() => {
@@ -41,5 +66,5 @@ export const useRecette = defineStore("recette", () => {
       })
       .finally(() => (loading.value = false));
   }
-  return { storeRecette, resetForm, loading, errors, form, status };
+  return { storeRecette, resetForm, loading, errors, form, status, clickToAdd };
 });
