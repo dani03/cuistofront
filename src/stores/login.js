@@ -2,7 +2,6 @@ import { reactive, ref } from "vue";
 import { defineStore } from "pinia";
 import { useAuth } from "@/stores/auth";
 
-
 export const useLogin = defineStore("login", () => {
   //pour la generation de token
   const auth = useAuth();
@@ -32,10 +31,11 @@ export const useLogin = defineStore("login", () => {
     return window.axios
       .post("login", form)
       .then((response) => {
-        //console.log("response => ", response);
+        console.log("response => ", response);
         auth.login(response.data.access_token);
       })
       .catch((error) => {
+        console.log(error.response.data);
         if (error.response.status === 422) {
           errors.value = error.response.data.errors;
         }

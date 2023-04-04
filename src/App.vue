@@ -28,7 +28,7 @@ const auth = useAuth();
               Profil
             </RouterLink>
             <RouterLink class="router-link" :to="{ name: 'recettes.profile' }">
-              Mes recettes
+              Ajouter une recette
             </RouterLink>
           </template>
         </div>

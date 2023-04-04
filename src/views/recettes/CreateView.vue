@@ -8,7 +8,11 @@ onBeforeUnmount(store.resetForm);
 </script>
 
 <template>
-  <form @submit.prevent="store.storeRecette" novalidate>
+  <form
+    enctype="multipart/form-data"
+    @submit.prevent="store.storeRecette"
+    novalidate
+  >
     <div class="flex flex-col mx-auto md:w-96 w-full">
       <h1 class="text-2xl font-bold mb-4 text-center">ajoutez une recette</h1>
       <div class="flex flex-col gap-2 mb-4">
@@ -24,17 +28,18 @@ onBeforeUnmount(store.resetForm);
         <ValidationError :errors="store.errors" field="name" />
       </div>
       <div class="flex flex-col gap-2 mb-4">
-        <label for="url_video" class="required"
+        <label for="urlVideo" class="required"
           >fichier video <span>(type: mp4 )</span></label
         >
         <input
-          id="url_video"
-          name="url_video"
+          v-on:change="store.handleFile"
+          id="urlVideo"
+          name="urlVideo"
           type="file"
           class="form-input plate"
           :disabled="store.loading"
         />
-        <ValidationError :errors="store.errors" field="name" />
+        <ValidationError :errors="store.errors" field="urlVideo" />
       </div>
       <div class="flex flex-col gap-2">
         <label for="description">Description</label>
@@ -63,16 +68,17 @@ onBeforeUnmount(store.resetForm);
             class="form-input w-48 plate"
             :disabled="store.loading"
           />
-          <ValidationError :errors="store.errors" field="ingredients[]" />
+          <ValidationError :errors="store.errors" field="ingredients" />
         </div>
         <!--  -->
         <div class="inline-flex">
           <div class="flex flex-col gap-2 ml-2">
             <label for="qte" class="required">qté</label>
             <input
-              v-model="store.form.quantite"
+              v-model="store.form.quantity"
               type="number"
-              name="quantite"
+              name="quantity"
+              min="1"
               class="form-input w-16 plate"
               required
             />
@@ -96,7 +102,7 @@ onBeforeUnmount(store.resetForm);
               v-show="
                 store.form.unite_mesure &&
                 store.form.ingredientName &&
-                store.form.quantite
+                store.form.quantity
               "
               @click="store.clickToAdd"
             >
@@ -111,7 +117,7 @@ onBeforeUnmount(store.resetForm);
           :key="ingredient.name"
           class="bg-blue-100 w-40 text-white-800 text-md font-medium m-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
         >
-          {{ ingredient.name }} ( {{ ingredient.quantite
+          {{ ingredient.name }} ( {{ ingredient.quantity
           }}{{ ingredient.unite_mesure }})
         </span>
       </div>
