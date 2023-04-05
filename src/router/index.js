@@ -43,6 +43,12 @@ const router = createRouter({
       path: "/profile/recettes",
       name: "recettes.profile",
       beforeEnter: auth,
+      component: () => import("@/views/profile/RecetteProfilView.vue"),
+    },
+    {
+      path: "/recette/create",
+      name: "recettes.create",
+      beforeEnter: auth,
       component: () => import("@/views/recettes/CreateView.vue"),
     },
   ],

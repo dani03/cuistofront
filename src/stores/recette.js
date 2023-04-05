@@ -7,6 +7,14 @@ export const useRecette = defineStore("recette", () => {
   const router = useRouter();
   const loading = ref(false);
   const status = ref("");
+  const recettes = ref([]);
+
+  function getRecettes() {
+    return window.axios.get("profile/recettes").then((response) => {
+      console.log("recettes => ", response.data);
+      recettes.value = response.data.data;
+    });
+  }
 
   const form = reactive({
     name: "",
@@ -30,19 +38,11 @@ export const useRecette = defineStore("recette", () => {
     form.unite_mesure = "";
   }
   function handleFile(event) {
-    // debugger;
     //console.log("selected file", file.value.files);
     let formData = new FormData();
     formData.append("file", event.target.files[0]);
     console.log(formData);
     const file = event.target.files[0];
-    // let reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.onload = (e) => {
-    //   console.log(e.target.result);
-    //   form.urlVideo = e.target.result;
-    // };
-    //Upload to server
     form.urlVideo = file;
     console.log(form.urlVideo);
   }
@@ -97,6 +97,8 @@ export const useRecette = defineStore("recette", () => {
     errors,
     form,
     status,
+    getRecettes,
+    recettes,
     handleFile,
     clickToAdd,
   };

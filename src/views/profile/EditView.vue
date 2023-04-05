@@ -48,6 +48,12 @@ onBeforeUnmount(store.resetForm);
           >
             <span class="ml-4">changez le mot de passe</span>
           </router-link>
+          <router-link
+            class="router-link flex items-center p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+            :to="{ name: 'recettes.profile' }"
+          >
+            <span class="ml-4">Mes recettes</span>
+          </router-link>
         </li>
       </ul>
     </div>
