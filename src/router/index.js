@@ -18,8 +18,14 @@ const router = createRouter({
     {
       path: "/recettes",
       name: "recettes.index",
-      beforeEnter: auth,
+      // beforeEnter: auth,
       component: () => import("@/views/recettes/indexView.vue"),
+    },
+    {
+      path: "/recette/show/:slug",
+      name: "recette.show",
+      beforeEnter: auth,
+      component: () => import("@/views/recettes/EditView.vue"),
     },
     {
       path: "/login",

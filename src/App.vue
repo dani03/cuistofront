@@ -16,7 +16,7 @@ const auth = useAuth();
             >
               <img src="@/assets/cuistotuto-logo.svg" />
             </div>
-            <a href="/" class="text-green-600">Cuistotutos</a>
+            <a href="/" class="text-green-600"> <i>Cuistotutos</i> </a>
           </h2>
           <template v-if="auth.check">
             <RouterLink class="router-link" :to="{ name: 'recettes.index' }">

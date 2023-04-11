@@ -26,6 +26,32 @@ export const useRecette = defineStore("recette", () => {
     unite_mesure: ref(""),
   });
 
+  function updateRecette(recette) {
+    if (loading.value) return;
+
+    loading.value = true;
+    errors.value = {};
+    var formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("description", form.description);
+    formData.append("ingredients", JSON.stringify(form.ingredients));
+    formData.append("urlVideo", form.urlVideo ? form.urlVideo : null);
+    var config = {
+      header: { "Contect-type": "multipart/form-data" },
+    };
+    window.axios
+      .post(`/recette/update/${recette.slug}`, formData, config)
+      .then(() => {
+        router.push({ name: "recettes.profile" });
+      })
+      .catch((error) => {
+        if (error.response.status == 422) {
+          errors.value = error.response.data.errors;
+        }
+      })
+      .finally(() => (loading.value = false));
+  }
+
   function addIngredient() {
     form.ingredients.push({
       name: form.ingredientName,
@@ -63,6 +89,15 @@ export const useRecette = defineStore("recette", () => {
     form.unite_mesure = "";
   }
 
+  function getRecette(recette) {
+    window.axios.get(`/recette/show/${recette.slug}`).then((response) => {
+      console.log("response =>", response.data);
+      form.description = response.data.data.description;
+      form.name = response.data.data.name;
+      form.ingredients = response.data.data.ingredients;
+    });
+  }
+
   async function storeRecette() {
     if (loading.value) return;
     loading.value = true;
@@ -75,7 +110,7 @@ export const useRecette = defineStore("recette", () => {
     var config = {
       header: { "Contect-type": "multipart/form-data" },
     };
-    console.log("this is form => ", formData.getAll("ingredients"));
+    //console.log("this is form => ", formData.getAll("ingredients"));
     window.axios
       .post("/recette", formData, config)
       .then(() => {
@@ -99,6 +134,8 @@ export const useRecette = defineStore("recette", () => {
     status,
     getRecettes,
     recettes,
+    getRecette,
+    updateRecette,
     handleFile,
     clickToAdd,
   };
