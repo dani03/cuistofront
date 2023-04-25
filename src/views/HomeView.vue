@@ -1,10 +1,11 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, onBeforeMount } from "vue";
 import { useRecette } from "@/stores/recette";
 //import { RouterLink } from "vue-router";
 
 const store = useRecette();
-onMounted(store.getAllRecettes);
+onBeforeMount(store.findRecettesLikes);
+onMounted(store.homeRecettes);
 </script>
 
 <template>
@@ -35,17 +36,20 @@ onMounted(store.getAllRecettes);
       v-for="recette in store.recettes"
       :key="recette.id"
       tabindex="0"
-      class="focus:outline-none rounded-lg mx-8 w-1/3 border-x-2 border-green-600 xl:mb-0 m-4 shadow-xl"
+      class="focus:outline-none rounded-lg mx-8 md:w-1/3 border-x-2 border-green-600 xl:mb-0 m-4 shadow-xl"
     >
       <div class="bg-white rounded-md">
         <div class="flex items-center justify-between px-4 pt-4">
-          <button class="mb-3">
+          <!-- like button -->
+          <button class="mb-3" @click="store.likeRecette(recette)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 w-6"
-              fill="white"
+              :fill="
+                store.likesIdsRecettes.includes(recette.id) ? 'red' : 'white'
+              "
               viewBox="0 0 24 24"
-              stroke="currentColor"
+              stroke="red"
             >
               <path
                 stroke-linecap="round"
@@ -55,7 +59,12 @@ onMounted(store.getAllRecettes);
               />
             </svg>
           </button>
-          <a href="" class="bg-green-400 py-1.5 px-6 rounded-full">
+          <!-- end like button -->
+          <!-- watch button camera -->
+          <RouterLink
+            :to="{ name: 'recette.watch', params: { slug: recette.slug } }"
+            class="bg-green-400 py-1.5 px-6 rounded-full"
+          >
             <p tabindex="0" class="focus:outline-none text-xs text-white">
               <button>
                 <svg
@@ -73,7 +82,7 @@ onMounted(store.getAllRecettes);
                 </svg>
               </button>
             </p>
-          </a>
+          </RouterLink>
         </div>
         <div class="p-4">
           <div class="flex items-center">
@@ -97,11 +106,8 @@ onMounted(store.getAllRecettes);
             {{ recette.description }}
           </p>
 
-          <div class="flex items-center justify-between py-4">
-            <p
-              tabindex="0"
-              class="focus:outline-none text-xs text-indigo-600 pl-5"
-            >
+          <div class="flex items-center justify-between p-4">
+            <p class="focus:outline-none text-xs text-gray-600">
               mise à jour {{ recette.updated_at }}
             </p>
           </div>

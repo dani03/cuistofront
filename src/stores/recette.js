@@ -8,6 +8,8 @@ export const useRecette = defineStore("recette", () => {
   const loading = ref(false);
   const status = ref("");
   const recettes = ref([]);
+  const oneRecette = ref([]);
+  const likesIdsRecettes = ref([]);
 
   function getRecettes() {
     return window.axios.get("profile/recettes").then((response) => {
@@ -94,6 +96,50 @@ export const useRecette = defineStore("recette", () => {
       });
   }
 
+  // find recettes when not connected
+  function homeRecettes() {
+    window.axios
+      .get("/")
+      .then((response) => {
+        recettes.value = response.data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status == 422) {
+          errors.value = error.response.data.errors;
+        }
+      });
+  }
+  //like une recette
+  function likeRecette(recette) {
+    window.axios
+      .post(`recette/like/${recette.slug}`)
+      .then(() => {
+        console.log("recette liker avec sucees");
+      })
+      .catch((error) => {
+        if (error.response.status == 422) {
+          errors.value = error.response.data.errors;
+        }
+      });
+    //console.log(recette.slug);
+  }
+
+  // recuperation des recettes likes par un utilisateur
+  function findRecettesLikes() {
+    console.log("beforeMount");
+    window.axios.get(`profile/recettes/likes`).then((response) => {
+      getIdsRecettesLikes(response.data.data);
+      homeRecettes();
+    });
+  }
+  function getIdsRecettesLikes(data) {
+    data.forEach((recette) => {
+      likesIdsRecettes.value.push(recette.id);
+      console.log(likesIdsRecettes.value);
+    });
+  }
+
   //suppression d'une recette
   function deleteRecette(recette) {
     window.axios
@@ -138,6 +184,14 @@ export const useRecette = defineStore("recette", () => {
     });
   }
 
+  function watchRecette(recette) {
+    window.axios.get(`/recette/show/${recette.slug}`).then((response) => {
+      console.log("datas =>", response.data.data);
+      oneRecette.value = response.data.data;
+      console.log("one recette =>", oneRecette);
+    });
+  }
+
   //sauvegarder une recette
   async function storeRecette() {
     if (loading.value) return;
@@ -168,17 +222,23 @@ export const useRecette = defineStore("recette", () => {
   }
 
   return {
-    storeRecette,
-    resetForm,
     loading,
     errors,
     form,
     status,
+    recettes,
+    oneRecette,
+    likesIdsRecettes,
+    resetForm,
     getAllRecettes,
+    storeRecette,
     deleteRecette,
     getRecettes,
-    recettes,
+    homeRecettes,
+    findRecettesLikes,
+    likeRecette,
     getRecette,
+    watchRecette,
     updateRecette,
     handleFile,
     clickToAdd,

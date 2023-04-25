@@ -17,8 +17,6 @@ window.axios.interceptors.response.use(
       console.log("pas connectez va être rediriger");
       auth.destroyTokenAndRedirectTo();
     }
-    console.log("user est bien connectez");
-
     return Promise.reject(error);
   }
 );

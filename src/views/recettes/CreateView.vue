@@ -130,7 +130,7 @@ onBeforeUnmount(store.resetForm);
           class="btn btn-primary w-full"
           :disabled="store.loading"
         >
-          <!-- <IconSpinner class="animate-spin" v-show="store.loading" /> -->
+          <IconSpinner class="animate-spin" v-show="store.loading" />
           ajouter la recette
         </button>
         <!-- <RouterLink :to="{ name: 'vehicles.index' }" class="btn btn-secondary">

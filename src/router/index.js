@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+//import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HomeView,
+      component: () => import("@/views/HomeView.vue"),
     },
     {
       path: "/register",
@@ -18,9 +18,9 @@ const router = createRouter({
     {
       path: "/recettes",
       name: "recettes.index",
-      // beforeEnter: auth,
       component: () => import("@/views/recettes/indexView.vue"),
     },
+
     {
       path: "/recette/show/:slug",
       name: "recette.show",
@@ -56,6 +56,12 @@ const router = createRouter({
       name: "recettes.create",
       beforeEnter: auth,
       component: () => import("@/views/recettes/CreateView.vue"),
+    },
+    {
+      path: "/recette/watch/:slug",
+      name: "recette.watch",
+      beforeEnter: auth,
+      component: () => import("@/views/recettes/WatchView.vue"),
     },
   ],
 });
