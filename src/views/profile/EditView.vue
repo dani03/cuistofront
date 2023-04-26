@@ -56,7 +56,7 @@ onBeforeUnmount(store.resetForm);
           </router-link>
           <router-link
             class="router-link flex items-center p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
-            :to="{ name: 'recettes.profile' }"
+            :to="{ name: 'recettes.likes' }"
           >
             <span class="ml-4"> Mes Likes</span>
           </router-link>

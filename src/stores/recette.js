@@ -11,11 +11,13 @@ export const useRecette = defineStore("recette", () => {
   const oneRecette = ref([]);
   const likesIdsRecettes = ref([]);
   const recetteIsInListOfLikes = ref(false);
+  const recettesLiked = ref([]);
 
   function getRecettes() {
     return window.axios.get("profile/recettes").then((response) => {
       console.log("recettes => ", response.data);
       recettes.value = response.data.data;
+      findRecettesLikes();
     });
   }
 
@@ -126,11 +128,12 @@ export const useRecette = defineStore("recette", () => {
 
   // recuperation des recettes likes par un utilisateur
   function findRecettesLikes() {
-    console.log("beforeMount");
     window.axios.get(`profile/recettes/likes`).then((response) => {
+      recettesLiked.value = response.data.data;
       getIdsRecettesLikes(response.data.data);
     });
   }
+
   function getIdsRecettesLikes(data) {
     likesIdsRecettes.value = [];
     data.forEach((recette) => {
@@ -235,6 +238,7 @@ export const useRecette = defineStore("recette", () => {
     oneRecette,
     likesIdsRecettes,
     recetteIsInListOfLikes,
+    recettesLiked,
     is_liked,
     resetForm,
     getAllRecettes,

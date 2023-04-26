@@ -1,35 +1,20 @@
 <script setup>
 import { onMounted } from "vue";
 import { useRecette } from "@/stores/recette";
-import { RouterLink } from "vue-router";
+
 const store = useRecette();
 
-onMounted(store.getRecettes);
+onMounted(store.findRecettesLikes);
 </script>
 
 <template>
-  <div class="flex flex-col mx-auto md:w-100 w-full">
-    <h1 class="text-2xl font-bold mb-4 text-center">Mes Recettes</h1>
-    <!-- <RouterLink :to="{ name: 'recettes.create' }" class="btn btn-primary w-64">
-      ajouter une recette
-    </RouterLink> -->
+  <div class="w-full">
+    <h1 class="text-2xl font-bold mb-4 text-center">Mes Likes</h1>
 
     <div class="border-t h-[1px] my-6"></div>
-
-    <div class="flex justify-center flex-wrap">
-      <div v-if="!store.recettes.length">
-        <div>
-          <h1>vous n'avez pas de recette</h1>
-          <RouterLink
-            :to="{ name: 'recettes.create' }"
-            class="btn btn-primary w-64"
-          >
-            ajouter une recette
-          </RouterLink>
-        </div>
-      </div>
+    <div class="flex justify-evenly m-4 flex-wrap">
       <div
-        v-for="recette in store.recettes"
+        v-for="recette in store.recettesLiked"
         :key="recette.id"
         tabindex="0"
         class="focus:outline-none rounded-lg mx-8 md:w-1/3 border-x-2 border-green-600 xl:mb-0 m-4 shadow-xl"

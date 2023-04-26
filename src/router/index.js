@@ -63,6 +63,12 @@ const router = createRouter({
       beforeEnter: auth,
       component: () => import("@/views/recettes/WatchView.vue"),
     },
+    {
+      path: "/profile/recettes/likes",
+      name: "recettes.likes",
+      beforeEnter: auth,
+      component: () => import("@/views/profile/RecettesLikeView.vue"),
+    },
   ],
 });
 
