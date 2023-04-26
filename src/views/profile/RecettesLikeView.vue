@@ -14,6 +14,7 @@ onMounted(store.findRecettesLikes);
     <div class="border-t h-[1px] my-6"></div>
     <div class="flex justify-evenly m-4 flex-wrap">
       <div
+        v-show="store.recettesLiked"
         v-for="recette in store.recettesLiked"
         :key="recette.id"
         tabindex="0"
@@ -93,6 +94,11 @@ onMounted(store.findRecettesLikes);
               </p>
             </div>
           </div>
+        </div>
+      </div>
+      <div v-show="store.recettesLiked.length <= 0">
+        <div class="w-full flex justify-center">
+          <img class="w-80 h-full" src="../../assets/images/empty.jpg" alt="" />
         </div>
       </div>
     </div>
