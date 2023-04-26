@@ -1,11 +1,15 @@
 <script setup>
-import { onMounted, onBeforeMount } from "vue";
+import { onMounted, onBeforeMount, watchEffect } from "vue";
 import { useRecette } from "@/stores/recette";
 //import { RouterLink } from "vue-router";
 
 const store = useRecette();
 onBeforeMount(store.findRecettesLikes);
 onMounted(store.homeRecettes);
+watchEffect(() => {
+  console.log(store.likesIdsRecettes);
+  store.likesIdsRecettes;
+});
 </script>
 
 <template>
