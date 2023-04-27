@@ -12,6 +12,7 @@ export const useRecette = defineStore("recette", () => {
   const likesIdsRecettes = ref([]);
   const recetteIsInListOfLikes = ref(false);
   const recettesLiked = ref([]);
+  const commentaires = ref([]);
 
   function getRecettes() {
     return window.axios.get("profile/recettes").then((response) => {
@@ -30,6 +31,14 @@ export const useRecette = defineStore("recette", () => {
     quantity: ref(""),
     unite_mesure: ref(""),
   });
+
+  // formulaire commentaire
+  const commentForm = reactive({
+    commentaire: ref(""),
+  });
+  function handleForm() {
+    console.log("id de la recette");
+  }
 
   //updated a recette
   function updateRecette(recette) {
@@ -239,6 +248,8 @@ export const useRecette = defineStore("recette", () => {
     likesIdsRecettes,
     recetteIsInListOfLikes,
     recettesLiked,
+    commentForm,
+    commentaires,
     is_liked,
     resetForm,
     getAllRecettes,
@@ -253,5 +264,6 @@ export const useRecette = defineStore("recette", () => {
     updateRecette,
     handleFile,
     clickToAdd,
+    handleForm,
   };
 });
