@@ -19,6 +19,7 @@ onBeforeUnmount(commentStore.resetForm);
 watch(
   () => store.oneRecette,
   (newVal) => {
+    console.log("hello", newVal);
     commentStore.findCommentaires(newVal.commentaires);
     console.log("ici ", newVal);
   },
@@ -38,31 +39,30 @@ watchEffect(async () => {
 
 <template>
   <div class="flex flex-wrap w-full">
-    <!-- <div class="w-2/3 rounded p-4">
-      {{ store.oneRecette.name }}
-      <Vue3CanvasVideoPlayer
-        :src="store.oneRecette.link_video"
-        :muted="false"
-        :autoplay="true"
-        :range="[10, 20]"
-        :fps="30"
-        :bbox="{
-          data: {
-            100: [0, 200, 100, 400],
-            101: [10, 210, 110, 410],
-            102: [20, 220, 120, 420],
-          },
-          borderSize: 1,
-          borderColor: 'red',
-          fillColor: 'green',
-        }"
-        :type="'contain'"
-        :messageTime="1000"
-        :preview="true"
-        :darkMode="true"
-      />
-    </div> -->
-    <div class="w-2/3 h-72 p-4 mt-4 mx-2">
+    <div class="w-2/3 rounded p-4">
+      <video width="420" height="240" class="w-full rounded-lg" controls>
+        <source :src="store.oneRecette.link_video" type="video/mp4" />
+        <source :src="store.oneRecette.link_video" type="video/ogg" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <aside class="w-1/3 rounded p-4 mt-2">
+      <h2 class="text-2xl uppercase text-bold">{{ store.oneRecette.name }}</h2>
+      <section>
+        <h3 class="uppercase">description</h3>
+        <div>{{ store.oneRecette.description }}</div>
+        <div>
+          <li
+            v-for="ingredient in store.oneRecette.ingredients"
+            :key="ingredient.id"
+          >
+            {{ ingredient.name }}({{ ingredient.quantity
+            }}{{ ingredient.unite_mesure }})
+          </li>
+        </div>
+      </section>
+    </aside>
+    <div class="w-2/3 h-54 p-4 mt-4 mx-2">
       <form
         @submit.prevent="commentStore.handleForm(store.oneRecette)"
         novalidate
