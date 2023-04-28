@@ -203,9 +203,7 @@ export const useRecette = defineStore("recette", () => {
 
   function watchRecette(recette) {
     window.axios.get(`/recette/show/${recette.slug}`).then((response) => {
-      console.log("datas =>", response.data.data);
       oneRecette.value = response.data.data;
-      console.log("one recette =>", oneRecette);
     });
   }
 

@@ -8,19 +8,35 @@ export const useComment = defineStore("commentaire", () => {
   const showComment = ref(false);
   const status = ref("");
   const caracterLength = ref(0);
-  const maxLength = ref(255);
+  const maxLength = ref(240);
 
   const form = reactive({
     commentaire: "",
   });
 
   function resetForm() {
-    form.commentaire = ref("");
+    form.commentaire = "";
   }
 
   function watchComment(text) {
-    console.log("inside watch");
     caracterLength.value = text.length;
+  }
+  function getCommentaires(recetteId) {
+    commentaires.value = "";
+    window.axios
+      .get(`comment/show/${recetteId}`)
+      .then((response) => {
+        console.log("getCommentaires", response);
+        commentaires.value = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function findCommentaires(comments) {
+    console.log("comments ", comments);
+    commentaires.value = comments;
   }
 
   function handleForm(recette) {
@@ -32,10 +48,12 @@ export const useComment = defineStore("commentaire", () => {
       .post(`comment/store/${recette.slug}`, form)
       .then((response) => {
         showComment.value = true;
+        console.log("les responses---", response.data.recette);
         status.value = response.data.message;
         setTimeout(() => {
           showComment.value = false;
         }, 2000);
+        getCommentaires(response.data.recette.id);
         resetForm();
       })
       .catch((error) => {
@@ -59,7 +77,9 @@ export const useComment = defineStore("commentaire", () => {
     caracterLength,
     maxLength,
     watchComment,
+    findCommentaires,
     resetForm,
     handleForm,
+    getCommentaires,
   };
 });

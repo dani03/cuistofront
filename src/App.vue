@@ -57,12 +57,12 @@ const auth = useAuth();
     </div>
   </header>
 
-  <div class="container md:pt-1 mx-auto">
+  <div class="container md:pt-1 mx-auto h-auto">
     <RouterView />
   </div>
 
   <!-- footer -->
-  <footer class="bg-gray-300 w-full p-4 mt-12 mb-0">
+  <footer class="bg-gray-300 w-full mt-12 p-4 mb-0">
     <!-- marging just for display-->
     <div class="px-4 pt-3 pb-4 border-b -mx-4 border-gray-400">
       <div class="max-w-xl mx-auto">

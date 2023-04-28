@@ -14,13 +14,20 @@ const store = useRecette();
 const route = useRoute();
 const commentStore = useComment();
 
-onBeforeUnmount(store.resetForm);
+onBeforeUnmount(commentStore.resetForm);
 
+watch(
+  () => store.oneRecette,
+  (newVal) => {
+    commentStore.findCommentaires(newVal.commentaires);
+    console.log("ici ", newVal);
+  },
+  { immediate: true }
+);
 watch(
   () => commentStore.form.commentaire,
   (newVal) => {
     commentStore.watchComment(newVal);
-    // Do something when commentaire changes
   }
 );
 
@@ -55,7 +62,7 @@ watchEffect(async () => {
         :darkMode="true"
       />
     </div> -->
-    <div class="w-2/3 h-80 p-4 mt-4 mx-2">
+    <div class="w-2/3 h-72 p-4 mt-4 mx-2">
       <form
         @submit.prevent="commentStore.handleForm(store.oneRecette)"
         novalidate
@@ -125,4 +132,57 @@ watchEffect(async () => {
       />
     </video> -->
   </div>
+  <section class="bg-white w-2/3 p-4 mt-4 mb-4 mx-2">
+    <div class="w-full text-center text-lg">
+      <icon-spinner-component v-if="!commentStore.commentaires" />
+    </div>
+    <article
+      v-show="commentStore.commentaires.slice().reverse()"
+      v-for="commentaire in commentStore.commentaires"
+      :key="commentaire.id"
+      class="px-4 mb-4 py-2 text-base bg-white mx-2 rounded-lg dark:bg-gray-900"
+    >
+      <footer class="flex justify-between items-center mb-2">
+        <div class="flex items-center">
+          <p
+            class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"
+          >
+            <img
+              class="mr-2 w-6 h-6 rounded-full"
+              src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+              alt="Michael Gough"
+            />{{ commentaire.user.firstname }}, {{ commentaire.user.lastname }}
+          </p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            <time pubdate datetime="2022-02-08" title="February 8th, 2022">{{
+              commentaire.created_at
+            }}</time>
+          </p>
+        </div>
+        <button
+          id="dropdownComment1Button"
+          data-dropdown-toggle="dropdownComment1"
+          class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          type="button"
+        >
+          <svg
+            class="w-5 h-5"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+            ></path>
+          </svg>
+          <span class="sr-only">modifier</span>
+        </button>
+        <!-- Dropdown menu -->
+      </footer>
+      <p class="text-gray-500 dark:text-gray-400">
+        {{ commentaire.comment }}
+      </p>
+    </article>
+  </section>
 </template>
