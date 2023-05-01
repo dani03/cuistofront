@@ -62,7 +62,7 @@ export const useRecette = defineStore("recette", () => {
         router.push({ name: "recettes.profile" });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
         if (error.response.status == 422) {
           errors.value = error.response.data.errors;
         }
@@ -207,6 +207,14 @@ export const useRecette = defineStore("recette", () => {
     });
   }
 
+  function deleteIngredient(ingredient, recette = null) {
+    let indexIngredient = form.ingredients.indexOf(ingredient);
+    form.ingredients.splice(indexIngredient, 1);
+    if (recette !== null) {
+      console.log("ici");
+    }
+  }
+
   //sauvegarder une recette
   async function storeRecette() {
     if (loading.value) return;
@@ -253,6 +261,7 @@ export const useRecette = defineStore("recette", () => {
     getAllRecettes,
     storeRecette,
     deleteRecette,
+    deleteIngredient,
     getRecettes,
     homeRecettes,
     findRecettesLikes,

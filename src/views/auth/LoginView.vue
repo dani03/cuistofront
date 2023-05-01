@@ -57,7 +57,7 @@ onBeforeUnmount(store.resetForm);
 
       <div class="flex flex-col gap-2">
         <button type="submit" class="btn btn-primary" :disabled="store.loading">
-          <IconSpinner class="animate-spin" v-show="store.loading" />
+          <icon-spinner-component class="animate-spin" v-show="store.loading" />
           se connecter
         </button>
       </div>

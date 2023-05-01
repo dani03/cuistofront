@@ -133,6 +133,7 @@ watchEffect(async () => {
           {{ ingredient.name }} ( {{ ingredient.quantity
           }}{{ ingredient.unite_mesure }})
           <svg
+            @click="store.deleteIngredient(ingredient)"
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5 ml-3 hover:text-gray-300"
             viewBox="0 0 20 20"
@@ -155,7 +156,7 @@ watchEffect(async () => {
           class="btn btn-primary w-full"
           :disabled="store.loading"
         >
-          <IconSpinner class="animate-spin" v-show="store.loading" />
+          <icon-spinner-component class="animate-spin" v-show="store.loading" />
           mettre à jour la recette
         </button>
         <RouterLink

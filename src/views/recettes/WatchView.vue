@@ -35,18 +35,24 @@ watch(
 watchEffect(async () => {
   store.watchRecette({ slug: route.params.slug });
 });
+console.log(store.oneRecette);
 </script>
 
 <template>
   <div class="flex flex-wrap w-full">
     <div class="w-2/3 rounded p-4">
       <video width="420" height="240" class="w-full rounded-lg" controls>
-        <source :src="store.oneRecette.link_video" type="video/mp4" />
+        <source
+          :src="`http://localhost:4000${store.oneRecette.link_video}`"
+          type="video/mp4"
+        />
         <source :src="store.oneRecette.link_video" type="video/ogg" />
         Your browser does not support the video tag.
       </video>
     </div>
-    <aside class="w-1/3 rounded p-4 mt-2">
+    <aside
+      class="w-1/3 p-4 mt-4 border-t-2 border-l-2 rounded-xl border-green-400"
+    >
       <h2 class="text-2xl uppercase text-bold">{{ store.oneRecette.name }}</h2>
       <section>
         <h3 class="uppercase">description</h3>
@@ -56,8 +62,12 @@ watchEffect(async () => {
             v-for="ingredient in store.oneRecette.ingredients"
             :key="ingredient.id"
           >
-            {{ ingredient.name }}({{ ingredient.quantity
-            }}{{ ingredient.unite_mesure }})
+            <span
+              class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+            >
+              {{ ingredient.name }}({{ ingredient.quantity
+              }}{{ ingredient.unite_mesure }})</span
+            >
           </li>
         </div>
       </section>
@@ -137,8 +147,8 @@ watchEffect(async () => {
       <icon-spinner-component v-if="!commentStore.commentaires" />
     </div>
     <article
-      v-show="commentStore.commentaires.slice().reverse()"
-      v-for="commentaire in commentStore.commentaires"
+      v-show="commentStore.commentaires"
+      v-for="commentaire in commentStore.commentaires.reverse()"
       :key="commentaire.id"
       class="px-4 mb-4 py-2 text-base bg-white mx-2 rounded-lg dark:bg-gray-900"
     >

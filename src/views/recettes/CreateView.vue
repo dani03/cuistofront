@@ -41,6 +41,7 @@ onBeforeUnmount(store.resetForm);
         />
         <ValidationError :errors="store.errors" field="urlVideo" />
       </div>
+
       <div class="flex flex-col gap-2">
         <label for="description">Description</label>
 
@@ -111,14 +112,30 @@ onBeforeUnmount(store.resetForm);
           </div>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div
+        v-if="store.form.ingredients.length > 0"
+        class="mt-2 px-2 pt-2 pb-11 mb-3 flex flex-wrap rounded-lg bg-purple-200 dark:bg-gray-400"
+      >
         <span
           v-for="ingredient in store.form.ingredients"
           :key="ingredient.name"
-          class="bg-blue-100 w-40 text-white-800 text-md font-medium m-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+          class="flex flex-wrap pl-4 pr-2 py-2 m-1 justify-between items-center text-sm font-medium rounded-xl cursor-pointer bg-purple-500 text-gray-200 hover:bg-purple-600 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100"
         >
           {{ ingredient.name }} ( {{ ingredient.quantity
           }}{{ ingredient.unite_mesure }})
+          <svg
+            @click="store.deleteIngredient(ingredient)"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 ml-3 hover:text-gray-300"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            />
+          </svg>
         </span>
       </div>
 
@@ -130,7 +147,7 @@ onBeforeUnmount(store.resetForm);
           class="btn btn-primary w-full"
           :disabled="store.loading"
         >
-          <IconSpinner class="animate-spin" v-show="store.loading" />
+          <icon-spinner-component class="animate-spin" v-show="store.loading" />
           ajouter la recette
         </button>
         <!-- <RouterLink :to="{ name: 'vehicles.index' }" class="btn btn-secondary">
