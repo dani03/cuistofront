@@ -26,6 +26,7 @@ export const useRecette = defineStore("recette", () => {
     name: "",
     description: "",
     urlVideo: "",
+    origine: "",
     ingredients: ref([]),
     ingredientName: ref(""),
     quantity: ref(""),
@@ -36,8 +37,9 @@ export const useRecette = defineStore("recette", () => {
   const commentForm = reactive({
     commentaire: ref(""),
   });
-  function handleForm() {
-    console.log("id de la recette");
+
+  function resetOneRecette() {
+    oneRecette.value = ref([]);
   }
 
   //updated a recette
@@ -185,6 +187,7 @@ export const useRecette = defineStore("recette", () => {
     form.name = "";
     form.description = "";
     form.urlVideo = "";
+    form.origine = "";
     form.ingredients = ref([]);
     form.ingredientName = "";
     form.quantity = "";
@@ -225,6 +228,7 @@ export const useRecette = defineStore("recette", () => {
     formData.append("description", form.description);
     formData.append("ingredients", JSON.stringify(form.ingredients));
     formData.append("urlVideo", form.urlVideo);
+    formData.append("origine", form.origine);
     var config = {
       header: { "Contect-type": "multipart/form-data" },
     };
@@ -257,6 +261,7 @@ export const useRecette = defineStore("recette", () => {
     commentForm,
     commentaires,
     is_liked,
+    resetOneRecette,
     resetForm,
     getAllRecettes,
     storeRecette,
@@ -271,6 +276,6 @@ export const useRecette = defineStore("recette", () => {
     updateRecette,
     handleFile,
     clickToAdd,
-    handleForm,
+
   };
 });

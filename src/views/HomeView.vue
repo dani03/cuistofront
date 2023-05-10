@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, onBeforeMount, watchEffect } from "vue";
 import { useRecette } from "@/stores/recette";
-//import { RouterLink } from "vue-router";
+import { getCountries } from "country-city-multilanguage";
 
+//import { RouterLink } from "vue-router";
+console.log(getCountries("fr"));
 const store = useRecette();
 onBeforeMount(store.findRecettesLikes);
 onMounted(store.homeRecettes);
@@ -35,12 +37,12 @@ watchEffect(() => {
       </p>
     </div>
   </div>
-  <div class="flex justify-evenly flex-wrap mt-8">
+  <div class="flex justify-evenly flex-wrap mt-4">
     <div
       v-for="recette in store.recettes"
       :key="recette.id"
       tabindex="0"
-      class="focus:outline-none rounded-lg mx-8 md:w-1/3 border-x-2 border-green-600 xl:mb-0 m-4 shadow-xl"
+      class="rounded-lg lg:w-4/12 border-x-2 border-green-600 xl:mb-0 m-4 shadow-xl"
     >
       <div class="bg-white rounded-md">
         <div class="flex items-center justify-between px-4 pt-4">
@@ -96,6 +98,13 @@ watchEffect(() => {
           <div class="flex items-center justify-between p-4">
             <p class="focus:outline-none text-xs text-gray-600">
               mise à jour {{ recette.updated_at }}
+            </p>
+            <p>
+              <span
+                class="bg-blue-100 text-white text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-white"
+              >
+                {{ recette.origine }}</span
+              >
             </p>
           </div>
         </div>

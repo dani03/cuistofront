@@ -75,6 +75,7 @@ const router = createRouter({
 function auth(to, from, next) {
   if (!localStorage.getItem("access_token")) {
     console.log("user is not connected");
+    //auth.destroyTokenAndRedirectTo();
     return next({ name: "login" });
   }
 

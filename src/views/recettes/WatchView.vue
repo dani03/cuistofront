@@ -15,6 +15,7 @@ const route = useRoute();
 const commentStore = useComment();
 
 onBeforeUnmount(commentStore.resetForm);
+onBeforeUnmount(store.resetOneRecette);
 
 watch(
   () => store.oneRecette,
@@ -142,12 +143,11 @@ console.log(store.oneRecette);
       />
     </video> -->
   </div>
-  <section class="bg-white w-2/3 p-4 mt-4 mb-4 mx-2">
-    <div class="w-full text-center text-lg">
-      <icon-spinner-component v-if="!commentStore.commentaires" />
-    </div>
+  <section
+    v-if="commentStore.commentaires.length > 0"
+    class="bg-white w-2/3 p-4 mt-4 mb-4 mx-2"
+  >
     <article
-      v-show="commentStore.commentaires"
       v-for="commentaire in commentStore.commentaires.reverse()"
       :key="commentaire.id"
       class="px-4 mb-4 py-2 text-base bg-white mx-2 rounded-lg dark:bg-gray-900"

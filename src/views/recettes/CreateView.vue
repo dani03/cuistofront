@@ -1,7 +1,9 @@
 <script setup>
 import { onBeforeUnmount } from "vue";
 import { useRecette } from "@/stores/recette";
-
+import { getCountries } from "country-city-multilanguage";
+const countries = getCountries("fr");
+//import { RouterLink } from "vue-router";
 const store = useRecette();
 
 onBeforeUnmount(store.resetForm);
@@ -27,6 +29,23 @@ onBeforeUnmount(store.resetForm);
         />
         <ValidationError :errors="store.errors" field="name" />
       </div>
+      <div class="flex flex-col gap-2 mb-4">
+        <label for="name" class="">origine </label>
+        <select
+          v-model="store.form.origine"
+          class="form-input plate"
+          name="origine"
+          id=""
+        >
+          <option value="">pas d'origine plat revisité</option>
+          <option v-for="country in countries" :key="country.index">
+            {{ country.label }}
+          </option>
+        </select>
+
+        <ValidationError :errors="store.errors" field="name" />
+      </div>
+
       <div class="flex flex-col gap-2 mb-4">
         <label for="urlVideo" class="required"
           >fichier video <span>(type: mp4 )</span></label

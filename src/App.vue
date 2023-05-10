@@ -57,12 +57,12 @@ const auth = useAuth();
     </div>
   </header>
 
-  <div class="container md:pt-1 mx-auto h-auto">
+  <div class="flex-1 md:pt-1 mb-8 mx-auto h-auto min-h-screen">
     <RouterView />
   </div>
 
   <!-- footer -->
-  <footer class="bg-gray-300 w-full mt-12 p-4 mb-0">
+  <footer class="bg-gray-300 w-full p-4 mb-0 mt-auto">
     <!-- marging just for display-->
     <div class="px-4 pt-3 pb-4 border-b -mx-4 border-gray-400">
       <div class="max-w-xl mx-auto">
@@ -92,9 +92,7 @@ const auth = useAuth();
     </div>
     <div class="flex items-center justify-between my-4">
       <p class="text-blue-500">Tous droits Reservés,</p>
-      <p class="inline-flex text-blue-500 px-2 pt-6">
-        Par Dani(Le Marcheur Blanc).
-      </p>
+      <p class="inline-flex text-blue-500 px-2 pt-6">Par Dani.</p>
       <div class="flex items-center">
         <a href="#">
           <svg
